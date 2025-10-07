@@ -4,8 +4,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
 from ..models import User
+from ..serializers import UserRegistrationSerializer, UserSerializer
 
 
 @api_view(['POST'])
@@ -14,56 +14,30 @@ def register(request):
     """
     Register a new user account.
     """
-    try:
-        data = request.data
+    # Add password_confirm if not provided (for backward compatibility)
+    data = request.data.copy()
+    if 'password_confirm' not in data and 'password' in data:
+        data['password_confirm'] = data['password']
 
-        # Validate required fields
-        required_fields = ['email', 'password', 'first_name', 'last_name']
-        for field in required_fields:
-            if not data.get(field):
-                return Response(
-                    {'error': f'{field} is required'},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-
-        # Check if user already exists
-        if User.objects.filter(email=data['email']).exists():
-            return Response(
-                {'error': 'User with this email already exists'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        # Create user
-        user = User.objects.create_user(
-            username=data['email'],  # Use email as username
-            email=data['email'],
-            password=data['password'],
-            first_name=data['first_name'],
-            last_name=data['last_name']
-        )
+    serializer = UserRegistrationSerializer(data=data)
+    if serializer.is_valid():
+        user = serializer.save()
 
         # Generate tokens
         refresh = RefreshToken.for_user(user)
 
+        # Serialize user data
+        user_serializer = UserSerializer(user)
+
         return Response({
-            'user': {
-                'id': user.id,
-                'email': user.email,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'full_name': user.full_name,
-            },
+            'user': user_serializer.data,
             'tokens': {
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
             }
         }, status=status.HTTP_201_CREATED)
 
-    except Exception as e:
-        return Response(
-            {'error': str(e)},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR
-        )
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -94,14 +68,11 @@ def login(request):
         # Generate tokens
         refresh = RefreshToken.for_user(user)
 
+        # Serialize user data
+        user_serializer = UserSerializer(user)
+
         return Response({
-            'user': {
-                'id': user.id,
-                'email': user.email,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'full_name': user.full_name,
-            },
+            'user': user_serializer.data,
             'tokens': {
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),

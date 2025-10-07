@@ -1,0 +1,17 @@
+version: '3.8'
+
+# Override for development
+services:
+  web:
+    volumes:
+      - .:/app
+    environment:
+      - DEBUG=1
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+
+  # Remove nginx for development
+  nginx:
+    profiles:
+      - production

@@ -1,0 +1,2054 @@
+openapi: 3.0.3
+info:
+  title: Prism Financial API
+  version: 1.0.0
+  description: API for financial management application
+paths:
+  /api/v1/accounts/:
+    get:
+      operationId: v1_accounts_list
+      description: |-
+        ViewSet for managing user accounts.
+        All accounts are scoped to the authenticated user.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAccountList'
+          description: ''
+    post:
+      operationId: v1_accounts_create
+      description: |-
+        ViewSet for managing user accounts.
+        All accounts are scoped to the authenticated user.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Account'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Account'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+          description: ''
+  /api/v1/accounts/{id}/:
+    get:
+      operationId: v1_accounts_retrieve
+      description: |-
+        ViewSet for managing user accounts.
+        All accounts are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+          description: ''
+    put:
+      operationId: v1_accounts_update
+      description: |-
+        ViewSet for managing user accounts.
+        All accounts are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Account'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Account'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+          description: ''
+    patch:
+      operationId: v1_accounts_partial_update
+      description: |-
+        ViewSet for managing user accounts.
+        All accounts are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAccount'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAccount'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAccount'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+          description: ''
+    delete:
+      operationId: v1_accounts_destroy
+      description: Delete an account with transaction check
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/accounts/summary/:
+    get:
+      operationId: v1_accounts_summary_retrieve
+      description: Get account summary statistics
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+          description: ''
+  /api/v1/auth/login/:
+    post:
+      operationId: v1_auth_login_create
+      description: Authenticate user and return JWT tokens.
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/auth/refresh/:
+    post:
+      operationId: v1_auth_refresh_create
+      description: Refresh JWT access token using refresh token.
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/auth/register/:
+    post:
+      operationId: v1_auth_register_create
+      description: Register a new user account.
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/budgets/:
+    get:
+      operationId: v1_budgets_list
+      description: |-
+        ViewSet for managing budgets.
+        All budgets are scoped to the authenticated user.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedBudgetList'
+          description: ''
+    post:
+      operationId: v1_budgets_create
+      description: Create budget with proper serializer
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BudgetCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BudgetCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BudgetCreate'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetCreate'
+          description: ''
+  /api/v1/budgets/{id}/:
+    get:
+      operationId: v1_budgets_retrieve
+      description: |-
+        ViewSet for managing budgets.
+        All budgets are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Budget'
+          description: ''
+    put:
+      operationId: v1_budgets_update
+      description: |-
+        ViewSet for managing budgets.
+        All budgets are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Budget'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Budget'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Budget'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Budget'
+          description: ''
+    patch:
+      operationId: v1_budgets_partial_update
+      description: |-
+        ViewSet for managing budgets.
+        All budgets are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBudget'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBudget'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBudget'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Budget'
+          description: ''
+    delete:
+      operationId: v1_budgets_destroy
+      description: |-
+        ViewSet for managing budgets.
+        All budgets are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/budgets/current/:
+    get:
+      operationId: v1_budgets_current_retrieve
+      description: Get current active budgets
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Budget'
+          description: ''
+  /api/v1/budgets/over_budget/:
+    get:
+      operationId: v1_budgets_over_budget_retrieve
+      description: Get budgets that are over their limit
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Budget'
+          description: ''
+  /api/v1/budgets/summary/:
+    get:
+      operationId: v1_budgets_summary_retrieve
+      description: Get budget summary statistics
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Budget'
+          description: ''
+  /api/v1/categories/:
+    get:
+      operationId: v1_categories_list
+      description: |-
+        ViewSet for managing transaction categories.
+        All categories are scoped to the authenticated user.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCategoryList'
+          description: ''
+    post:
+      operationId: v1_categories_create
+      description: |-
+        ViewSet for managing transaction categories.
+        All categories are scoped to the authenticated user.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Category'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+  /api/v1/categories/{id}/:
+    get:
+      operationId: v1_categories_retrieve
+      description: |-
+        ViewSet for managing transaction categories.
+        All categories are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    put:
+      operationId: v1_categories_update
+      description: |-
+        ViewSet for managing transaction categories.
+        All categories are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Category'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    patch:
+      operationId: v1_categories_partial_update
+      description: |-
+        ViewSet for managing transaction categories.
+        All categories are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    delete:
+      operationId: v1_categories_destroy
+      description: Delete a category with validation
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/categories/by_type/:
+    get:
+      operationId: v1_categories_by_type_retrieve
+      description: Get categories grouped by type (income/expense)
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+  /api/v1/categories/tree/:
+    get:
+      operationId: v1_categories_tree_retrieve
+      description: Get categories organized as a tree structure
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+  /api/v1/goals/:
+    get:
+      operationId: v1_goals_list
+      description: |-
+        ViewSet for managing financial goals.
+        All goals are scoped to the authenticated user.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedGoalList'
+          description: ''
+    post:
+      operationId: v1_goals_create
+      description: Create goal with proper serializer
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoalCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GoalCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GoalCreate'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoalCreate'
+          description: ''
+  /api/v1/goals/{id}/:
+    get:
+      operationId: v1_goals_retrieve
+      description: |-
+        ViewSet for managing financial goals.
+        All goals are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+          description: ''
+    put:
+      operationId: v1_goals_update
+      description: |-
+        ViewSet for managing financial goals.
+        All goals are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Goal'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Goal'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Goal'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+          description: ''
+    patch:
+      operationId: v1_goals_partial_update
+      description: |-
+        ViewSet for managing financial goals.
+        All goals are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGoal'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGoal'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGoal'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+          description: ''
+    delete:
+      operationId: v1_goals_destroy
+      description: |-
+        ViewSet for managing financial goals.
+        All goals are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/goals/{id}/update_progress/:
+    post:
+      operationId: v1_goals_update_progress_create
+      description: Update goal progress by adding/subtracting amount
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Goal'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Goal'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Goal'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+          description: ''
+  /api/v1/goals/active/:
+    get:
+      operationId: v1_goals_active_retrieve
+      description: Get active goals
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+          description: ''
+  /api/v1/goals/completed/:
+    get:
+      operationId: v1_goals_completed_retrieve
+      description: Get completed goals
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+          description: ''
+  /api/v1/goals/near_target/:
+    get:
+      operationId: v1_goals_near_target_retrieve
+      description: Get goals that are close to their target (>80% progress)
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+          description: ''
+  /api/v1/goals/summary/:
+    get:
+      operationId: v1_goals_summary_retrieve
+      description: Get goal summary statistics
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+          description: ''
+  /api/v1/transactions/:
+    get:
+      operationId: v1_transactions_list
+      description: |-
+        ViewSet for managing financial transactions.
+        All transactions are scoped to the authenticated user.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTransactionList'
+          description: ''
+    post:
+      operationId: v1_transactions_create
+      description: Create transaction with proper serializer
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransactionCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransactionCreate'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionCreate'
+          description: ''
+  /api/v1/transactions/{id}/:
+    get:
+      operationId: v1_transactions_retrieve
+      description: |-
+        ViewSet for managing financial transactions.
+        All transactions are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+          description: ''
+    put:
+      operationId: v1_transactions_update
+      description: |-
+        ViewSet for managing financial transactions.
+        All transactions are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+          description: ''
+    patch:
+      operationId: v1_transactions_partial_update
+      description: |-
+        ViewSet for managing financial transactions.
+        All transactions are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTransaction'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTransaction'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTransaction'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+          description: ''
+    delete:
+      operationId: v1_transactions_destroy
+      description: |-
+        ViewSet for managing financial transactions.
+        All transactions are scoped to the authenticated user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/transactions/recent/:
+    get:
+      operationId: v1_transactions_recent_retrieve
+      description: Get recent transactions (last 30 days)
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+          description: ''
+  /api/v1/transactions/summary/:
+    get:
+      operationId: v1_transactions_summary_retrieve
+      description: Get transaction summary statistics
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+          description: ''
+  /api/v1/user/change-password/:
+    post:
+      operationId: v1_user_change_password_create
+      description: Change user password.
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/user/delete-account/:
+    delete:
+      operationId: v1_user_delete_account_destroy
+      description: Delete user account and all associated data.
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/user/profile/:
+    get:
+      operationId: v1_user_profile_retrieve
+      description: Get current user profile information.
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/user/profile/update/:
+    put:
+      operationId: v1_user_profile_update_update
+      description: Update current user profile information.
+      tags:
+      - v1
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+components:
+  schemas:
+    Account:
+      type: object
+      description: Serializer for Account model with user ownership validation.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        account_type:
+          $ref: '#/components/schemas/AccountTypeEnum'
+        account_type_display:
+          type: string
+          readOnly: true
+        balance:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        is_active:
+          type: boolean
+        owner:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - account_type
+      - account_type_display
+      - created_at
+      - id
+      - name
+      - owner
+      - updated_at
+    AccountTypeEnum:
+      enum:
+      - checking
+      - savings
+      - credit
+      - investment
+      - cash
+      - loan
+      - other
+      type: string
+      description: |-
+        * `checking` - Checking
+        * `savings` - Savings
+        * `credit` - Credit Card
+        * `investment` - Investment
+        * `cash` - Cash
+        * `loan` - Loan
+        * `other` - Other
+    BlankEnum:
+      enum:
+      - ''
+    Budget:
+      type: object
+      description: Serializer for Budget model with spending tracking.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        category:
+          type: integer
+        category_name:
+          type: string
+          readOnly: true
+        category_full_name:
+          type: string
+          readOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        period:
+          $ref: '#/components/schemas/PeriodEnum'
+        period_display:
+          type: string
+          readOnly: true
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        spent_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        remaining_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        percentage_used:
+          type: number
+          format: double
+          readOnly: true
+        is_over_budget:
+          type: boolean
+          readOnly: true
+        is_active:
+          type: boolean
+        owner:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - amount
+      - category
+      - category_full_name
+      - category_name
+      - created_at
+      - end_date
+      - id
+      - is_over_budget
+      - name
+      - owner
+      - percentage_used
+      - period_display
+      - remaining_amount
+      - spent_amount
+      - start_date
+      - updated_at
+    BudgetCreate:
+      type: object
+      description: Simplified serializer for budget creation with category ID.
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        category_id:
+          type: integer
+          writeOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        period:
+          $ref: '#/components/schemas/PeriodEnum'
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        is_active:
+          type: boolean
+      required:
+      - amount
+      - category_id
+      - end_date
+      - name
+      - start_date
+    Category:
+      type: object
+      description: Serializer for Category model with hierarchical support.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        full_name:
+          type: string
+          readOnly: true
+        category_type:
+          $ref: '#/components/schemas/CategoryTypeEnum'
+        category_type_display:
+          type: string
+          readOnly: true
+        color:
+          type: string
+          maxLength: 7
+        parent:
+          type: integer
+          nullable: true
+        parent_name:
+          type: string
+          readOnly: true
+        subcategories:
+          type: string
+          readOnly: true
+        is_active:
+          type: boolean
+        owner:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - category_type_display
+      - created_at
+      - full_name
+      - id
+      - name
+      - owner
+      - parent_name
+      - subcategories
+      - updated_at
+    CategoryTypeEnum:
+      enum:
+      - expense
+      - income
+      type: string
+      description: |-
+        * `expense` - Expense
+        * `income` - Income
+    Goal:
+      type: object
+      description: Serializer for Goal model with progress tracking.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 150
+        description:
+          type: string
+        goal_type:
+          $ref: '#/components/schemas/GoalTypeEnum'
+        goal_type_display:
+          type: string
+          readOnly: true
+        target_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        current_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        remaining_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        progress_percentage:
+          type: number
+          format: double
+          readOnly: true
+        target_date:
+          type: string
+          format: date
+          nullable: true
+        linked_account:
+          type: integer
+          nullable: true
+        linked_account_name:
+          type: string
+          readOnly: true
+        is_active:
+          type: boolean
+        is_completed:
+          type: boolean
+          readOnly: true
+        is_goal_reached:
+          type: boolean
+          readOnly: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        owner:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - completed_at
+      - created_at
+      - goal_type_display
+      - id
+      - is_completed
+      - is_goal_reached
+      - linked_account_name
+      - name
+      - owner
+      - progress_percentage
+      - remaining_amount
+      - target_amount
+      - updated_at
+    GoalCreate:
+      type: object
+      description: Simplified serializer for goal creation with account ID.
+      properties:
+        name:
+          type: string
+          maxLength: 150
+        description:
+          type: string
+        goal_type:
+          $ref: '#/components/schemas/GoalTypeEnum'
+        target_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        current_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        target_date:
+          type: string
+          format: date
+          nullable: true
+        linked_account_id:
+          type: integer
+          writeOnly: true
+          nullable: true
+        is_active:
+          type: boolean
+      required:
+      - name
+      - target_amount
+    GoalTypeEnum:
+      enum:
+      - savings
+      - debt
+      - investment
+      - purchase
+      - emergency
+      - other
+      type: string
+      description: |-
+        * `savings` - Savings Goal
+        * `debt` - Debt Payoff
+        * `investment` - Investment Target
+        * `purchase` - Purchase Goal
+        * `emergency` - Emergency Fund
+        * `other` - Other
+    NullEnum:
+      enum:
+      - null
+    PaginatedAccountList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+    PaginatedBudgetList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Budget'
+    PaginatedCategoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+    PaginatedGoalList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Goal'
+    PaginatedTransactionList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+    PatchedAccount:
+      type: object
+      description: Serializer for Account model with user ownership validation.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        account_type:
+          $ref: '#/components/schemas/AccountTypeEnum'
+        account_type_display:
+          type: string
+          readOnly: true
+        balance:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        is_active:
+          type: boolean
+        owner:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedBudget:
+      type: object
+      description: Serializer for Budget model with spending tracking.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        category:
+          type: integer
+        category_name:
+          type: string
+          readOnly: true
+        category_full_name:
+          type: string
+          readOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        period:
+          $ref: '#/components/schemas/PeriodEnum'
+        period_display:
+          type: string
+          readOnly: true
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        spent_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        remaining_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        percentage_used:
+          type: number
+          format: double
+          readOnly: true
+        is_over_budget:
+          type: boolean
+          readOnly: true
+        is_active:
+          type: boolean
+        owner:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedCategory:
+      type: object
+      description: Serializer for Category model with hierarchical support.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        full_name:
+          type: string
+          readOnly: true
+        category_type:
+          $ref: '#/components/schemas/CategoryTypeEnum'
+        category_type_display:
+          type: string
+          readOnly: true
+        color:
+          type: string
+          maxLength: 7
+        parent:
+          type: integer
+          nullable: true
+        parent_name:
+          type: string
+          readOnly: true
+        subcategories:
+          type: string
+          readOnly: true
+        is_active:
+          type: boolean
+        owner:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedGoal:
+      type: object
+      description: Serializer for Goal model with progress tracking.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 150
+        description:
+          type: string
+        goal_type:
+          $ref: '#/components/schemas/GoalTypeEnum'
+        goal_type_display:
+          type: string
+          readOnly: true
+        target_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        current_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        remaining_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        progress_percentage:
+          type: number
+          format: double
+          readOnly: true
+        target_date:
+          type: string
+          format: date
+          nullable: true
+        linked_account:
+          type: integer
+          nullable: true
+        linked_account_name:
+          type: string
+          readOnly: true
+        is_active:
+          type: boolean
+        is_completed:
+          type: boolean
+          readOnly: true
+        is_goal_reached:
+          type: boolean
+          readOnly: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        owner:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedTransaction:
+      type: object
+      description: Serializer for Transaction model with related data.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        account:
+          type: integer
+        account_name:
+          type: string
+          readOnly: true
+        category:
+          type: integer
+          nullable: true
+        category_name:
+          type: string
+          readOnly: true
+        category_full_name:
+          type: string
+          readOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        description:
+          type: string
+          maxLength: 255
+        date:
+          type: string
+          format: date
+        notes:
+          type: string
+        transfer_to:
+          type: integer
+          nullable: true
+        transfer_to_name:
+          type: string
+          readOnly: true
+        is_recurring:
+          type: boolean
+        recurring_frequency:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/RecurringFrequencyEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        is_expense:
+          type: boolean
+          readOnly: true
+        is_income:
+          type: boolean
+          readOnly: true
+        is_transfer:
+          type: boolean
+          readOnly: true
+        owner:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PeriodEnum:
+      enum:
+      - monthly
+      - quarterly
+      - yearly
+      type: string
+      description: |-
+        * `monthly` - Monthly
+        * `quarterly` - Quarterly
+        * `yearly` - Yearly
+    RecurringFrequencyEnum:
+      enum:
+      - daily
+      - weekly
+      - monthly
+      - yearly
+      type: string
+      description: |-
+        * `daily` - Daily
+        * `weekly` - Weekly
+        * `monthly` - Monthly
+        * `yearly` - Yearly
+    Transaction:
+      type: object
+      description: Serializer for Transaction model with related data.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        account:
+          type: integer
+        account_name:
+          type: string
+          readOnly: true
+        category:
+          type: integer
+          nullable: true
+        category_name:
+          type: string
+          readOnly: true
+        category_full_name:
+          type: string
+          readOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        description:
+          type: string
+          maxLength: 255
+        date:
+          type: string
+          format: date
+        notes:
+          type: string
+        transfer_to:
+          type: integer
+          nullable: true
+        transfer_to_name:
+          type: string
+          readOnly: true
+        is_recurring:
+          type: boolean
+        recurring_frequency:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/RecurringFrequencyEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        is_expense:
+          type: boolean
+          readOnly: true
+        is_income:
+          type: boolean
+          readOnly: true
+        is_transfer:
+          type: boolean
+          readOnly: true
+        owner:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - account
+      - account_name
+      - amount
+      - category_full_name
+      - category_name
+      - created_at
+      - date
+      - description
+      - id
+      - is_expense
+      - is_income
+      - is_transfer
+      - owner
+      - transfer_to_name
+      - updated_at
+    TransactionCreate:
+      type: object
+      description: Simplified serializer for transaction creation with ID-based relationships.
+      properties:
+        account_id:
+          type: integer
+          writeOnly: true
+        category_id:
+          type: integer
+          writeOnly: true
+          nullable: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        description:
+          type: string
+          maxLength: 255
+        date:
+          type: string
+          format: date
+        notes:
+          type: string
+        transfer_to_id:
+          type: integer
+          writeOnly: true
+          nullable: true
+        is_recurring:
+          type: boolean
+        recurring_frequency:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/RecurringFrequencyEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+      required:
+      - account_id
+      - amount
+      - date
+      - description
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
